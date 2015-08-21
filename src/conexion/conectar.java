@@ -7,7 +7,7 @@ public class conectar {
     public  Connection conexion(){
         try{
             Class.forName("com.mysql.jdbc.Driver");
-            con=DriverManager.getConnection("jdbc:mysql://localhost/biblioteca","root","");
+            con=DriverManager.getConnection("jdbc:mysql://localhost/biblioteca","root","admin");
             System.out.println("conexion establecida");
             //JOptionPane.showMessageDialog(null,"conexion establecida");
         } catch (ClassNotFoundException | SQLException e){

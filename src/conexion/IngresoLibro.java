@@ -15,6 +15,7 @@ public class IngresoLibro extends javax.swing.JDialog {
      */
     conectar con=new conectar();
     Connection reg=con.conexion();
+    conexion conn = new conexion();
     
     public IngresoLibro(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -32,7 +33,7 @@ public class IngresoLibro extends javax.swing.JDialog {
         this.txt_editorial.setEnabled(true);
         this.txt_fec_ingreso.setEnabled(true);
         this.txt_fec_pub.setEnabled(true);
-        this.txt_fing_sis.setEnabled(true);
+        
         this.txt_num_pag.setEnabled(true);
         this.txt_num_reg.setEnabled(true);
         this.txt_observacion.setEnabled(true);
@@ -52,7 +53,7 @@ void bloquear(){
     this.txt_editorial.setEnabled(false);
     this.txt_fec_ingreso.setEnabled(false);
     this.txt_fec_pub.setEnabled(false);
-    this.txt_fing_sis.setEnabled(false);
+    
     this.txt_num_pag.setEnabled(false);
     this.txt_num_reg.setEnabled(false);
     this.txt_observacion.setEnabled(false);
@@ -74,7 +75,7 @@ public void limpiar(){
           this.txt_editorial.setText("");
           this.txt_fec_ingreso.setText("");
           this.txt_fec_pub.setText("");
-          this.txt_fing_sis.setText("");
+          
           this.txt_num_pag.setText("");
           this.txt_num_reg.setText("");
           this.txt_observacion.setText("");
@@ -148,7 +149,6 @@ public void limpiar(){
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
-        jLabel14 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
         txt_num_reg = new javax.swing.JTextField();
         txt_titulo = new javax.swing.JTextField();
@@ -162,7 +162,6 @@ public void limpiar(){
         txt_procedencia = new javax.swing.JTextField();
         txt_tipo = new javax.swing.JTextField();
         txt_fec_ingreso = new javax.swing.JTextField();
-        txt_fing_sis = new javax.swing.JTextField();
         jPanel4 = new javax.swing.JPanel();
         btn_nuevo = new javax.swing.JButton();
         btn_guardar = new javax.swing.JButton();
@@ -221,9 +220,6 @@ public void limpiar(){
         jLabel13.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel13.setText("Fecha de Ingreso:");
 
-        jLabel14.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel14.setText("Fing_Sis:");
-
         jLabel15.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel15.setText("Observaciones:");
 
@@ -263,9 +259,6 @@ public void limpiar(){
         txt_fec_ingreso.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txt_fec_ingreso.setAutoscrolls(false);
 
-        txt_fing_sis.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        txt_fing_sis.setAutoscrolls(false);
-
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -297,37 +290,35 @@ public void limpiar(){
                             .addComponent(txt_observacion))))
                 .addGap(43, 43, 43)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(jLabel12)
-                                .addGap(102, 102, 102)
-                                .addComponent(txt_tipo))
-                            .addGroup(jPanel3Layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createSequentialGroup()
+                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jLabel7)
-                                .addGap(54, 54, 54)
-                                .addComponent(txt_procedencia))
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(jLabel6)
-                                .addGap(81, 81, 81)
-                                .addComponent(txt_editorial))
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(jLabel11)
-                                .addGap(57, 57, 57)
-                                .addComponent(txt_clasificacion, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 20, Short.MAX_VALUE))
+                                .addComponent(jLabel12))
+                            .addGap(54, 54, 54)
+                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(txt_tipo, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(jPanel3Layout.createSequentialGroup()
+                                    .addComponent(txt_procedencia, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(0, 0, Short.MAX_VALUE))))
+                        .addGroup(jPanel3Layout.createSequentialGroup()
+                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                                    .addComponent(jLabel11)
+                                    .addGap(57, 57, 57))
+                                .addGroup(jPanel3Layout.createSequentialGroup()
+                                    .addComponent(jLabel6)
+                                    .addGap(87, 87, 87)))
+                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(txt_editorial, javax.swing.GroupLayout.DEFAULT_SIZE, 205, Short.MAX_VALUE)
+                                .addComponent(txt_clasificacion))
+                            .addGap(35, 35, 35)))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel14)
-                            .addComponent(jLabel13))
+                        .addComponent(jLabel13)
                         .addGap(23, 23, 23)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(txt_fec_ingreso, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(txt_fing_sis)
-                                .addGap(145, 145, 145))))))
+                        .addComponent(txt_fec_ingreso)
+                        .addGap(32, 32, 32)))
+                .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -358,8 +349,10 @@ public void limpiar(){
                         .addGap(10, 10, 10)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txt_fec_pub, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel12)
-                            .addComponent(txt_tipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(jLabel12)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txt_tipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -371,17 +364,13 @@ public void limpiar(){
                             .addComponent(jLabel13)
                             .addComponent(txt_fec_ingreso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel10)
-                            .addComponent(txt_num_pag, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel14))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel15)
-                            .addComponent(txt_observacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(txt_fing_sis, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel10)
+                    .addComponent(txt_num_pag, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel15)
+                    .addComponent(txt_observacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -460,9 +449,9 @@ public void limpiar(){
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 886, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
@@ -554,7 +543,22 @@ public void limpiar(){
         limpiar();
         //habilitar();
         desbloquear();
-        this.txt_num_reg.requestFocus();
+          String  sql = "SELECT num_reg FROM libros ORDER BY num_reg DESC LIMIT 1";
+        try {
+            conn.conectar();
+            ResultSet rs = conn.consulta(sql);          
+            rs.next();
+            int num_reg = rs.getInt(1);
+            int new_number = num_reg +1;
+            this.txt_num_reg.setText(""+new_number);
+            this.txt_titulo.requestFocus();
+            this.txt_num_reg.setEditable(false);
+            
+        } catch (Exception e) {
+             Logger.getLogger(IngresoLibro.class.getName()).log(Level.SEVERE,null,e);
+        }
+        
+     
     }//GEN-LAST:event_btn_nuevoActionPerformed
 
     private void btn_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cancelarActionPerformed
@@ -572,18 +576,18 @@ public void limpiar(){
         String sql;
         
         num_reg=this.txt_num_reg.getText();
-        titulo=this.txt_titulo.getText();
-        autor=this.txt_autor.getText();
-        editorial=this.txt_editorial.getText();
-        proce=this.txt_procedencia.getText();
-        f_pub=this.txt_fec_pub.getText();
-        edicion=this.txt_edicion.getText();
+        titulo=this.txt_titulo.getText().toUpperCase();
+        autor=this.txt_autor.getText().toUpperCase();
+        editorial=this.txt_editorial.getText().toUpperCase();
+        proce=this.txt_procedencia.getText().toUpperCase();
+        f_pub=this.txt_fec_pub.getText().toUpperCase();
+        edicion=this.txt_edicion.getText().toUpperCase();
         num_pag=this.txt_num_pag.getText();
-        clas=this.txt_clasificacion.getText();
-        tipo=this.txt_tipo.getText();
-        f_ingr=this.txt_fec_ingreso.getText();
-        obs=this.txt_observacion.getText();
-        fing_sis=this.txt_fing_sis.getText();
+        clas=this.txt_clasificacion.getText().toUpperCase();
+        tipo=this.txt_tipo.getText().toUpperCase();
+        f_ingr=this.txt_fec_ingreso.getText().toUpperCase();
+        obs=this.txt_observacion.getText().toUpperCase();
+        
         
         
         sql="INSERT INTO libros (num_reg,titulo,autores,editorial,procedencia,fec_publi,edicion,"
@@ -668,7 +672,6 @@ public void limpiar(){
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -690,7 +693,6 @@ public void limpiar(){
     private javax.swing.JTextField txt_editorial;
     private javax.swing.JTextField txt_fec_ingreso;
     private javax.swing.JTextField txt_fec_pub;
-    private javax.swing.JTextField txt_fing_sis;
     private javax.swing.JTextField txt_num_pag;
     private javax.swing.JTextField txt_num_reg;
     private javax.swing.JTextField txt_observacion;

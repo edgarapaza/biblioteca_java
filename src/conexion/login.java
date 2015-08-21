@@ -58,17 +58,17 @@ public login() {
         jLabel2.setFont(new java.awt.Font("Bell Gothic Std Black", 1, 18)); // NOI18N
         jLabel2.setText("BIENVENIDOS AL SISTEMA DE BIBLIOTECA");
         getContentPane().add(jLabel2);
-        jLabel2.setBounds(30, 10, 384, 24);
+        jLabel2.setBounds(30, 10, 423, 22);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel1.setText("USUARIO");
         getContentPane().add(jLabel1);
-        jLabel1.setBounds(60, 130, 67, 17);
+        jLabel1.setBounds(60, 130, 69, 17);
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel3.setText("CONTRASEÑA");
         getContentPane().add(jLabel3);
-        jLabel3.setBounds(60, 180, 100, 17);
+        jLabel3.setBounds(60, 180, 106, 17);
 
         txt_usuario.setAutoscrolls(false);
         getContentPane().add(txt_usuario);
@@ -81,12 +81,12 @@ public login() {
         jLabel4.setFont(new java.awt.Font("Bell Gothic Std Black", 1, 18)); // NOI18N
         jLabel4.setText("DEL ARCHIVO REGIONAL - PUNO");
         getContentPane().add(jLabel4);
-        jLabel4.setBounds(80, 40, 293, 24);
+        jLabel4.setBounds(80, 40, 324, 22);
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel6.setText("ACCESO AL SISTEMA");
         getContentPane().add(jLabel6);
-        jLabel6.setBounds(150, 80, 150, 17);
+        jLabel6.setBounds(150, 80, 161, 17);
 
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/fondo_login.png"))); // NOI18N
         jLabel5.setText("jLabel5");

@@ -31,7 +31,7 @@ public class conexion {
     public conexion() {
         //poner los datos apropiados
         this.usuario = "root";
-        this.clave = "";
+        this.clave = "admin";
         this.bd = "biblioteca";
         this.url = "jdbc:mysql://localhost/"+this.bd;
         this.driverClassName = "com.mysql.jdbc.Driver";

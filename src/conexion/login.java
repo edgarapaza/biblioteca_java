@@ -1,4 +1,5 @@
 package conexion;
+import java.awt.event.KeyEvent;
 import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -11,9 +12,9 @@ public login() {
         this.setLocationRelativeTo(null);
     }
 
-//@SuppressWarnings("unchecked")
- conectar con=new conectar();
-    Connection reg=con.conexion();
+    //@SuppressWarnings("unchecked")
+    conexion con = new conexion();
+ 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -58,35 +59,45 @@ public login() {
         jLabel2.setFont(new java.awt.Font("Bell Gothic Std Black", 1, 18)); // NOI18N
         jLabel2.setText("BIENVENIDOS AL SISTEMA DE BIBLIOTECA");
         getContentPane().add(jLabel2);
-        jLabel2.setBounds(30, 10, 423, 22);
+        jLabel2.setBounds(30, 10, 384, 24);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel1.setText("USUARIO");
         getContentPane().add(jLabel1);
-        jLabel1.setBounds(60, 130, 69, 17);
+        jLabel1.setBounds(60, 130, 67, 17);
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel3.setText("CONTRASEÑA");
         getContentPane().add(jLabel3);
-        jLabel3.setBounds(60, 180, 106, 17);
+        jLabel3.setBounds(60, 180, 100, 17);
 
         txt_usuario.setAutoscrolls(false);
+        txt_usuario.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_usuarioKeyTyped(evt);
+            }
+        });
         getContentPane().add(txt_usuario);
         txt_usuario.setBounds(190, 120, 190, 30);
 
         txt_password.setAutoscrolls(false);
+        txt_password.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_passwordKeyTyped(evt);
+            }
+        });
         getContentPane().add(txt_password);
         txt_password.setBounds(190, 170, 190, 30);
 
         jLabel4.setFont(new java.awt.Font("Bell Gothic Std Black", 1, 18)); // NOI18N
         jLabel4.setText("DEL ARCHIVO REGIONAL - PUNO");
         getContentPane().add(jLabel4);
-        jLabel4.setBounds(80, 40, 324, 22);
+        jLabel4.setBounds(80, 40, 293, 24);
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel6.setText("ACCESO AL SISTEMA");
         getContentPane().add(jLabel6);
-        jLabel6.setBounds(150, 80, 161, 17);
+        jLabel6.setBounds(150, 80, 150, 17);
 
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/fondo_login.png"))); // NOI18N
         jLabel5.setText("jLabel5");
@@ -109,23 +120,35 @@ public login() {
         login=this.txt_usuario.getText();
         pass=this.txt_password.getText();
         
-        sql="SELECT * FROM usuarios WHERE usuario='"+login+"' and password='"+pass+"'";
-        try {
-            PreparedStatement pst=reg.prepareStatement(sql);
-            ResultSet rs=pst.executeQuery(sql);
-            rs.next();
-            int n=rs.getRow();
-            if(n>0) {
-                JOptionPane.showMessageDialog(null,"BIENBENIDOS AL SISTEMA");
-                new menu_principal().setVisible(true);                
-                this.setVisible(false);
-            }else{
-                JOptionPane.showMessageDialog(null,"DATOS INCORRECTOS");
+        try{
+                con.conectar();
+                ResultSet res=con.consulta("SELECT * FROM usuarios WHERE usuario='"+login+"' and password='"+pass+"'");
+                res.next();
+                int a = Integer.parseInt(res.getString(1));
+                
+                PagPrincipal principal = new PagPrincipal();
+                principal.setVisible(true);
+                
+                con.cierraConexion();
+                dispose();
+            }catch(SQLException e){
+                JOptionPane.showMessageDialog(null,"Error: " + e);
             }
-        } catch (SQLException ex){
-            Logger.getLogger(menu_principal.class.getName()).log(Level.SEVERE,null,ex);
-        }
     }//GEN-LAST:event_btn_ingresarActionPerformed
+
+    private void txt_usuarioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_usuarioKeyTyped
+        char tecla=evt.getKeyChar();
+       if(tecla==KeyEvent.VK_ENTER){
+       this.btn_ingresar.doClick();
+       }
+    }//GEN-LAST:event_txt_usuarioKeyTyped
+
+    private void txt_passwordKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_passwordKeyTyped
+             char tecla=evt.getKeyChar();
+       if(tecla==KeyEvent.VK_ENTER){
+       this.btn_ingresar.doClick();
+       }
+    }//GEN-LAST:event_txt_passwordKeyTyped
     
     
     public static void main(String args[]) {

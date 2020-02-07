@@ -16,7 +16,7 @@ public class conexion {
 
 //CONSTRUCTORES
 
-    //Constructor que toma los datos de conexion por medio de parametros
+    //Constructor que toma los datos de conexion por medio de parametros  
     public conexion(String usuario, String clave, String url, String driverClassName, String bd) {
         this.usuario = usuario;
         this.clave = clave;
@@ -30,10 +30,10 @@ public class conexion {
     @SuppressWarnings("static-access")
     public conexion() {
         //poner los datos apropiados
-        this.usuario = "root";
-        this.clave = "admin";
-        this.bd = "biblioteca";
-        this.url = "jdbc:mysql://localhost/"+this.bd;
+        this.usuario = "usuario";
+        this.clave = "archivo123$";
+        this.bd = "biblioteca3";
+        this.url = "jdbc:mysql://192.168.0.73/"+this.bd;
         this.driverClassName = "com.mysql.jdbc.Driver";
     }
 

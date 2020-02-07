@@ -1,6 +1,8 @@
 
 package conexion;
 
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.sql.*;
 import java.sql.Connection;
 import java.util.logging.Level;
@@ -10,18 +12,34 @@ import javax.swing.table.DefaultTableModel;
 
 public class EditarLibro extends javax.swing.JDialog {
 
-       conectar con=new conectar();
-    Connection reg=con.conexion();
+    conexion conn = new conexion();
     
-    public EditarLibro(java.awt.Frame parent, boolean modal) {
+    public EditarLibro(javax.swing.JDialog parent, boolean modal) {
         super(parent, modal);
         initComponents();
-         this.setLocation(150,15 );
+         //this.setLocation(150,15 );
          this.refresh();
          bloquear();
+         contador();
       
         
     }
+    public void contador(){
+    String  sql = "SELECT count(num_reg) FROM libros";
+        try {
+            conn.conectar();
+            ResultSet rs = conn.consulta(sql);
+            rs.next();
+            int num_reg = rs.getInt(1);
+            //int new_number = num_reg +1;
+            this.lbl_cantidad.setText(""+num_reg);
+            //this.txt_titulo.requestFocus();
+            //this.txt_num_reg.setEditable(false);
+
+        } catch (Exception e) {
+            Logger.getLogger(IngresoLibro.class.getName()).log(Level.SEVERE,null,e);
+        }
+}
  void desbloquear(){
         this.txt_autor.setEnabled(true);
         this.txt_clasificacion.setEnabled(true);
@@ -87,11 +105,12 @@ public void limpiar(){
           //cb_categoria.setEditable(true);
           
      // }
+
       public void refresh(){
     Statement s;
     try {
-        s=con.conexion().createStatement();
-        ResultSet rs=s.executeQuery("select * from libros");
+        conn.conectar();
+        ResultSet rs=conn.consulta("select * from libros ORDER BY num_reg asc");
         DefaultTableModel modelo=new DefaultTableModel();
         modelo.addColumn("NUM_REGISTRO");
         modelo.addColumn("TITULO");
@@ -102,31 +121,35 @@ public void limpiar(){
         modelo.addColumn("EDICION");
         modelo.addColumn("NUM_PAGINAS");
         modelo.addColumn("CLASIFICACION");
-        modelo.addColumn("TIPO");
+        modelo.addColumn("COSTO");
         modelo.addColumn("FECHA INGRESO");
         modelo.addColumn("OBSERVACIONES");
-        modelo.addColumn("FING_SIS");
+       // modelo.addColumn("FING_SIS");
         
         
         while (rs.next()){
-            Object[] fila=new Object[13];
-            for(int i=0;i<13;i++)
+            Object[] fila=new Object[12];
+            for(int i=0;i<12;i++)
                 fila[i]=rs.getObject(i+1);
             modelo.addRow(fila);
         }
         tabla.setModel(modelo);
     }catch (SQLException ex){
-        Logger.getLogger(ingreso_libro.class.getName()).log(Level.SEVERE,null,ex);
+        Logger.getLogger(EditarLibro.class.getName()).log(Level.SEVERE,null,ex);
     }
 }
-   
+   public Image getIconImage(){
+        Image retValue=Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("icono/libros.png"));
+        return retValue; 
+    }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        btn_cerrar_sesion = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
@@ -158,17 +181,54 @@ public void limpiar(){
         btn_actualizar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabla = new javax.swing.JTable();
-        btn_cerrar_sesion = new javax.swing.JButton();
+        jPanel8 = new javax.swing.JPanel();
+        lbl_cantidad = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("ACTUALIZAR LIBROS");
+        setIconImage(getIconImage());
 
-        jPanel1.setBackground(new java.awt.Color(0, 100, 194));
+        jPanel1.setBackground(new java.awt.Color(48, 179, 201));
         jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanel1.setMaximumSize(new java.awt.Dimension(1355, 720));
+        jPanel1.setPreferredSize(new java.awt.Dimension(1355, 720));
+
+        jPanel2.setBackground(new java.awt.Color(0, 78, 208));
+        jPanel2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/ARCHIVO REGIONAL PEQUEÑO.png"))); // NOI18N
 
-        jPanel2.setBackground(new java.awt.Color(42, 183, 215));
-        jPanel2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btn_cerrar_sesion.setBackground(new java.awt.Color(27, 96, 206));
+        btn_cerrar_sesion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/salirrr.png"))); // NOI18N
+        btn_cerrar_sesion.setText("IR A MENÚ DE LIBROS");
+        btn_cerrar_sesion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_cerrar_sesionActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(37, 37, 37)
+                .addComponent(jLabel2)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btn_cerrar_sesion, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btn_cerrar_sesion, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel1.setText("ACTUALIZAR LIBRO");
@@ -204,7 +264,7 @@ public void limpiar(){
         jLabel11.setText("Clasificación:");
 
         jLabel12.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel12.setText("Tipo:");
+        jLabel12.setText("Costo:");
 
         jLabel13.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel13.setText("Fecha de Ingreso:");
@@ -282,16 +342,15 @@ public void limpiar(){
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel13)
                         .addGap(23, 23, 23)
-                        .addComponent(txt_fec_ingreso, javax.swing.GroupLayout.DEFAULT_SIZE, 188, Short.MAX_VALUE))
-                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createSequentialGroup()
-                            .addComponent(jLabel6)
-                            .addGap(87, 87, 87)
-                            .addComponent(txt_editorial))
-                        .addGroup(jPanel3Layout.createSequentialGroup()
-                            .addComponent(jLabel11)
-                            .addGap(57, 57, 57)
-                            .addComponent(txt_clasificacion, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txt_fec_ingreso, javax.swing.GroupLayout.DEFAULT_SIZE, 191, Short.MAX_VALUE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addGap(87, 87, 87)
+                        .addComponent(txt_editorial, javax.swing.GroupLayout.DEFAULT_SIZE, 185, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addComponent(jLabel11)
+                        .addGap(57, 57, 57)
+                        .addComponent(txt_clasificacion, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel7)
@@ -377,8 +436,11 @@ public void limpiar(){
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(btn_actualizar)
-            .addComponent(btn_cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btn_actualizar)
+                    .addComponent(btn_cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -408,152 +470,105 @@ public void limpiar(){
         });
         jScrollPane1.setViewportView(tabla);
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane1)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addGap(147, 147, 147))
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(411, 411, 411)
-                .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(67, 67, 67)
-                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+        jPanel8.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "CANTIDAD TOTAL DE LIBROS"));
 
-        btn_cerrar_sesion.setBackground(new java.awt.Color(27, 96, 206));
-        btn_cerrar_sesion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/salirrr.png"))); // NOI18N
-        btn_cerrar_sesion.setText("IR A MENÚ PRINCIPAL");
-        btn_cerrar_sesion.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_cerrar_sesionActionPerformed(evt);
-            }
-        });
+        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
+        jPanel8.setLayout(jPanel8Layout);
+        jPanel8Layout.setHorizontalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addGap(31, 31, 31)
+                .addComponent(lbl_cantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(62, Short.MAX_VALUE))
+        );
+        jPanel8Layout.setVerticalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(lbl_cantidad, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE)
+        );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(48, 48, 48))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(btn_cerrar_sesion, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)))
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 1052, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(81, 81, 81))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(322, 322, 322)
+                                .addComponent(jLabel1))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(10, 10, 10)
+                                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1331, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(156, 156, 156)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btn_cerrar_sesion, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(41, 41, 41))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(16, 16, 16)
+                                .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(82, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 1302, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btn_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cancelarActionPerformed
-        bloquear();
-        this.limpiar();
-        
-    }//GEN-LAST:event_btn_cancelarActionPerformed
-
-    private void tablaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaMouseClicked
-        desbloquear();
-        //this.btn_actualizar.setEnabled(true);
-
-        if( evt.getButton()==1){
-            int fila=tabla.getSelectedRow();
-            Statement s;
-            try{
-                String sql="select * from libros where num_reg="+tabla.getValueAt(fila,0);
-                s= con.conexion().createStatement();
-                ResultSet rs=s.executeQuery(sql);
-                rs.next();
-                this.txt_autor.setText(rs.getString("autores"));
-                this.txt_clasificacion.setText(rs.getString("clasificacion"));
-                this.txt_edicion.setText(rs.getString("edicion"));
-                this.txt_editorial.setText(rs.getString("editorial"));
-
-                this.txt_fec_ingreso.setText(rs.getString("fec_ingreso"));
-                this.txt_fec_pub.setText(rs.getString("fec_publi"));
-               
-                this.txt_num_pag.setText(rs.getString("num_pag"));
-                this.txt_num_reg.setText(rs.getString("num_reg"));
-                this.txt_observacion.setText(rs.getString("observaciones"));
-                this.txt_procedencia.setText(rs.getString("procedencia"));
-                this.txt_tipo.setText(rs.getString("tipo"));
-                this.txt_titulo.setText(rs.getString("titulo"));
-
-            }catch (Exception ex) {
-                ex.printStackTrace();
-            }
-        }
-        
-    }//GEN-LAST:event_tablaMouseClicked
-
     private void btn_cerrar_sesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cerrar_sesionActionPerformed
-        int opcion = JOptionPane.showConfirmDialog(this, "¿Està seguro que desea salir?", "¡ALERTA!", JOptionPane.YES_NO_OPTION);
+        int opcion = JOptionPane.showConfirmDialog(this, "¿Está seguro que desea regresar al menú de libros?", "¡ALERTA!", JOptionPane.YES_NO_OPTION);
         if(opcion==0){
             dispose();
         }
     }//GEN-LAST:event_btn_cerrar_sesionActionPerformed
 
+    private void btn_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cancelarActionPerformed
+        bloquear();
+        this.limpiar();
+    }//GEN-LAST:event_btn_cancelarActionPerformed
+
     private void btn_actualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_actualizarActionPerformed
         try{
+            /*
             String sql="UPDATE libros SET titulo=?,autores=?,editorial=?,procedencia=?,fec_publi=?,edicion=?,"
-                    + "num_pag=?,clasificacion=?,tipo=?,fec_ingreso=?,observaciones=?,fing_sis=now() WHERE num_reg=? limit 1";
-            
+            + "num_pag=?,clasificacion=?,tipo=?,fec_ingreso=?,observaciones=?,fing_sis=now() WHERE num_reg=? limit 1";
+
             int fila=tabla.getSelectedRow();
             int dao=(int)tabla.getValueAt(fila,0);
-            PreparedStatement ps = con.conexion().prepareStatement(sql);
             
+            PreparedStatement ps = conn.conectar().prepareStatement(sql);
+            res.next();
+            esc=Integer.parseInt(res.getString(1));
+
             //ps.setString(1, this.txt_num_reg.getText());
             ps.setString(1, this.txt_titulo.getText());
             ps.setString(2, this.txt_autor.getText());
@@ -566,8 +581,7 @@ public void limpiar(){
             ps.setString(9, this.txt_tipo.getText());
             ps.setString(10, this.txt_fec_ingreso.getText());
             ps.setString(11, this.txt_observacion.getText());
-           
-            
+
             ps.setInt(12, dao);
             int n=ps.executeUpdate();
             if(n>0){
@@ -575,11 +589,46 @@ public void limpiar(){
                 refresh();
                 JOptionPane.showMessageDialog(null, "LIBRO ACTUALIZADO !!");
             }
+            */
+            
         }catch (Exception e){
             JOptionPane.showMessageDialog(null, "ERROR: "+e.getMessage());
             System.out.println(e.getStackTrace());
         }
     }//GEN-LAST:event_btn_actualizarActionPerformed
+
+    private void tablaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaMouseClicked
+        desbloquear();
+        //this.btn_actualizar.setEnabled(true);
+        this.txt_num_reg.setEditable(false);
+        if( evt.getButton()==1){
+            int fila=tabla.getSelectedRow();
+            Statement s;
+            try{
+                String sql="select * from libros where num_reg="+tabla.getValueAt(fila,0);
+                conn.conectar();
+                ResultSet rs=conn.consulta(sql);
+                rs.next();
+                this.txt_autor.setText(rs.getString("autores"));
+                this.txt_clasificacion.setText(rs.getString("clasificacion"));
+                this.txt_edicion.setText(rs.getString("edicion"));
+                this.txt_editorial.setText(rs.getString("editorial"));
+
+                this.txt_fec_ingreso.setText(rs.getString("fec_ingreso"));
+                this.txt_fec_pub.setText(rs.getString("fec_publi"));
+
+                this.txt_num_pag.setText(rs.getString("num_pag"));
+                this.txt_num_reg.setText(rs.getString("num_reg"));
+                this.txt_observacion.setText(rs.getString("observaciones"));
+                this.txt_procedencia.setText(rs.getString("procedencia"));
+                this.txt_tipo.setText(rs.getString("tipo"));
+                this.txt_titulo.setText(rs.getString("titulo"));
+
+            }catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
+    }//GEN-LAST:event_tablaMouseClicked
 
     /**
      * @param args the command line arguments
@@ -611,7 +660,7 @@ public void limpiar(){
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                EditarLibro dialog = new EditarLibro(new javax.swing.JFrame(), true);
+                EditarLibro dialog = new EditarLibro(new javax.swing.JDialog(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -645,7 +694,9 @@ public void limpiar(){
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel8;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lbl_cantidad;
     private javax.swing.JTable tabla;
     private javax.swing.JTextField txt_autor;
     private javax.swing.JTextField txt_clasificacion;
